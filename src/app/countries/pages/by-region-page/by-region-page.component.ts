@@ -17,6 +17,7 @@ export class ByRegionPageComponent implements OnInit {
   public countries: Country[] = []
   public regions: Region[] = ['Africa', 'Europe', 'Asia', 'Oceania', 'Americas'];
   public selectedRegion?: Region;
+  public isLoading: boolean = false;
 
   constructor( private CountriesService: CountriesService ) {}
 
@@ -28,10 +29,14 @@ export class ByRegionPageComponent implements OnInit {
 
   searchRegion ( region: Region ) : void {
 
+    this.isLoading = true;
     this.selectedRegion = region;
 
     this.CountriesService.searchRegion( region )
-    .subscribe( countries => this.countries = countries)
+    .subscribe( countries => {
+      this.countries = countries
+      this.isLoading = false;
+    })
   }
 
 
